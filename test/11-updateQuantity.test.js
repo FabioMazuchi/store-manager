@@ -3,7 +3,7 @@ const frisby = require("frisby");
 const mysql = require("mysql2/promise");
 const restoreDb = require("./restoreDb");
 
-describe.skip("11-updateQuantity", () => {
+describe("11-updateQuantity", () => {
   const url = `http://localhost:${process.env.PORT}`;
   let connection;
 
