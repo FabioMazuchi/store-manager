@@ -15,7 +15,12 @@ const getById = async (req, res, next) => {
   }
 };
 
+const create = async (req, res, _next) => {
+  res.send('Sales create');
+};
+
 module.exports = {
   getSales,
   getById,
+  create,
 };

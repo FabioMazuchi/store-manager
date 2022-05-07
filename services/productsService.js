@@ -15,7 +15,19 @@ const getById = async (id) => {
   return product;
 };
 
+const create = async (name, quantity) => {
+  const product = await productsModel.getByName(name);
+  const arrayVazio = { status: 409, message: 'Product already exists' };
+  
+  if (product.length !== 0) throw arrayVazio;
+
+  const newProduct = await productsModel.create(name, quantity);
+
+  return newProduct;
+};
+
 module.exports = {
   getProducts,
   getById,
+  create,
 };
