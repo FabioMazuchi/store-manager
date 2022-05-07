@@ -8,7 +8,7 @@ const productIdBlank = (productId) => !productId;
 const quantityBlank = (quantity) => !quantity && quantity !== 0;
 const quantitySmaller = (quantity) => quantity <= 0;
 
-const verifyData = (productId, quantity) => {
+const verifyData = ({ productId, quantity }) => {
   if (productIdBlank(productId)) throw data.productIdBlank;
   if (quantitySmaller(quantity)) throw data.quantitySmaller;
   if (quantityBlank(quantity)) throw data.quantityBlank;
@@ -16,8 +16,8 @@ const verifyData = (productId, quantity) => {
 
 const validate = (req, res, next) => {
   try {
-    const { quantity, productId } = req.body[0];
-    verifyData(productId, quantity);
+    req.body.forEach(verifyData);
+    
     res.send('Ok');
   } catch (e) {
     next(e);
