@@ -16,7 +16,10 @@ const getById = async (req, res, next) => {
 };
 
 const create = async (req, res, _next) => {
-  res.send('Sales create');
+  const sale = req.body;
+
+  const newSold = await salesService.create(sale);
+  res.status(201).json(newSold);
 };
 
 module.exports = {

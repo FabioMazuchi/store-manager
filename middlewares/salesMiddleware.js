@@ -18,7 +18,7 @@ const validate = (req, res, next) => {
   try {
     req.body.forEach(verifyData);
     
-    res.send('Ok');
+    next();
   } catch (e) {
     next(e);
   }

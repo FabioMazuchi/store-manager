@@ -1,4 +1,7 @@
+const getDateHour = require('../utils/date');
 const connection = require('./connection');
+const salesProductsModel = require('./salesProductsModel');
+const salesModelUtils = require('../utils/salesModelUtils');
 
 const getSales = async () => {
   const query = `SELECT
@@ -30,7 +33,28 @@ const getById = async (id) => {
   return sale;
 };
 
+const create = async (arraySold) => {
+  const date = getDateHour();
+  const query = 'INSERT INTO sales (date) VALUES (?)';
+
+  const [{ insertId }] = await connection.execute(query, [date]);
+
+  salesModelUtils.addSoldIdOnObj(arraySold, insertId);
+
+  await arraySold.forEach(salesProductsModel.create);
+
+  salesModelUtils.removeSoldIdOnObj(arraySold);
+  
+  const newSold = {
+    id: insertId,
+    itemsSold: arraySold,
+  };
+
+  return newSold;
+};
+
 module.exports = {
   getSales,
   getById,
+  create,
 };
