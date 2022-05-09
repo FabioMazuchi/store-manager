@@ -6,6 +6,13 @@ const create = async ({ soldId, productId, quantity }) => {
   await connection.execute(query, [soldId, productId, quantity]);
 };
 
+const deletar = async (id) => {
+  const query = 'DELETE FROM sales_products WHERE sale_id=?';
+
+  await connection.execute(query, [id]);
+};
+
 module.exports = {
   create,
+  deletar,
 };

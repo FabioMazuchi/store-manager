@@ -3,7 +3,7 @@ const getDateHour = () => {
   const a = date.getFullYear();
   const m = date.getMonth() + 1;
   const d = date.getDate();
-  const h = date.getHours(); 
+  const h = date.getHours() - 3; 
   const min = date.getMinutes();
   const s = date.getSeconds(); 
 

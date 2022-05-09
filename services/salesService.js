@@ -21,8 +21,16 @@ const create = async (arraySold) => {
   return newSold;
 };
 
+const update = async (id, arraySold) => {
+  const soldUpdated = await salesModel.update(id, arraySold);
+  console.log(soldUpdated);
+
+  return soldUpdated;
+};
+
 module.exports = {
   getSales,
   getById,
   create,
+  update,
 };

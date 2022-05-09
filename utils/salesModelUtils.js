@@ -6,13 +6,10 @@ const addSoldIdOnObj = (array, insertId) => {
 };
 
 const removeSoldIdOnObj = (array) => {
-  // const newArray = [];
   array.forEach((sale) => {
     const s = sale;
     delete s.soldId;
-    // newArray.push(sale);
   });
-  // return newArray;
 };
 
 module.exports = {
