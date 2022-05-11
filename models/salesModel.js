@@ -75,9 +75,16 @@ const update = async (id, arraySold) => {
   return newUpdate;
 };
 
+const deletar = async (id) => {
+  const query = 'DELETE FROM sales WHERE id=?';
+
+  connection.execute(query, [id]);
+};
+
 module.exports = {
   getSales,
   getById,
   create,
   update,
+  deletar,
 };
