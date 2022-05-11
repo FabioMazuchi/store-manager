@@ -79,6 +79,7 @@ const deletar = async (id) => {
   const query = 'DELETE FROM sales WHERE id=?';
 
   connection.execute(query, [id]);
+  salesProductsModel.deletar(id);
 };
 
 module.exports = {
