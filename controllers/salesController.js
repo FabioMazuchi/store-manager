@@ -27,7 +27,6 @@ const update = async (req, res) => {
   const arraySold = req.body;
 
   const soldUpdated = await salesService.update(id, arraySold);
-  console.log(soldUpdated);
   
   res.status(200).json(soldUpdated);
 };

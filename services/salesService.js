@@ -23,7 +23,6 @@ const create = async (arraySold) => {
 
 const update = async (id, arraySold) => {
   const soldUpdated = await salesModel.update(id, arraySold);
-  console.log(soldUpdated);
 
   return soldUpdated;
 };
