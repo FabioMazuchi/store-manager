@@ -76,12 +76,6 @@ describe('Camada de "modelo" função "create"', () => {
 		const name = "Bicicleta";
 		const quantity = 7
 
-		const fakeProduct = {
-			id: 2,
-			name: 'Bicicleta',
-			quantity: 7
-		}
-
 		before(() => {
 			sinon.stub(connection, 'execute').resolves([{ insertId: 2 }]);
 		});
@@ -106,6 +100,74 @@ describe('Camada de "modelo" função "create"', () => {
 			const response = await productsModel.create(name, quantity);
 
 			expect(response.id).to.be.equal(2);
+		});
+	});
+});
+
+describe('Camada de "modelo" função "getById"', () => {
+	describe('quando existe o produto no BD', () => {
+		const id = 2;
+
+		const fakeProduct = [{
+			id: 2,
+			name: 'Bicicleta',
+			quantity: 7
+		}]
+
+		before(() => {
+			sinon.stub(connection, 'execute').resolves([fakeProduct]);
+		});
+
+		after(() => {
+			connection.execute.restore();
+		});
+
+		it('a função retorna um objeto', async () => {
+			const response = await productsModel.getById(id);
+
+			expect(response).to.be.a('object');
+		});
+
+		it('o objeto possui a propriedade "id"', async () => {
+			const response = await productsModel.getById(id);
+
+			expect(response).to.have.a.property('id');
+		});
+
+		it('o "id" tem o valor 2', async () => {
+			const response = await productsModel.getById(id);
+
+			expect(response.id).to.be.equal(2);
+		});
+		
+		it('o "id" tem o valor 2', async () => {
+			const response = await productsModel.getById(id);
+
+			expect(response.name).to.be.equal('Bicicleta');
+		});
+	});
+
+	describe('quando não existe o produto no BD', () => {
+		const id = 2;
+
+		before(() => {
+			sinon.stub(connection, 'execute').resolves([[[]]]);
+		});
+
+		after(() => {
+			connection.execute.restore();
+		});
+
+		it('a função retorna um array', async () => {
+			const response = await productsModel.getById(id);
+
+			expect(response).to.be.a('array');
+		});
+
+		it('o array está vazio', async () => {
+			const response = await productsModel.getById(id);
+
+			expect(response.length).to.be.equal(0);
 		});
 	});
 });

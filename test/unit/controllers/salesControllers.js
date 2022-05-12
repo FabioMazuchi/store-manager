@@ -80,3 +80,47 @@ describe('Camada do "controller" a função "create"', () => {
 		})
 	});
 });
+
+describe('Camada do "controller" a função "getById"', () => {
+	describe('quando existe produto cadastrado no BD', () => {
+		const req = {};
+		const res = {};
+		
+		const fakeProduct = 	
+		[
+			{
+				date: "2022-05-12T22:36:44.000Z",
+				productId: 3,
+				quantity: 15
+			}
+		]
+
+		before(() => {
+			req.params = {
+        id: 2
+      };
+
+			res.status = sinon.stub().returns(res);
+			res.json = sinon.stub().returns();
+
+			sinon.stub(salesService, 'getById').resolves(fakeProduct);
+		});
+
+		after(() => {
+			salesService.getById.restore();
+		})
+
+
+		it('é retornado o status 200', async () => {
+			await salesController.getById(req, res);
+
+			expect(res.status.calledWith(200)).to.be.equal(true);
+		});
+
+		it('é retornado o método "json" contendo um array', async () => {
+			await salesController.getById(req, res);
+
+			expect(res.json.calledWith(sinon.match.array)).to.be.equal(true);
+		})
+	});
+});

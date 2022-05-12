@@ -13,7 +13,7 @@ const getById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const product = await productsService.getById(id);
-    res.json(product);
+    res.status(200).json(product);
   } catch (e) {
     console.log('Erro getById: ', e.message);
     next(e);
@@ -35,7 +35,7 @@ const update = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { name, quantity } = req.body;
-  
+
     const updateProd = await productsService.update(id, name, quantity);
     res.send(updateProd);
   } catch (e) {

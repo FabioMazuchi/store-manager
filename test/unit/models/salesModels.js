@@ -72,9 +72,6 @@ describe('Camada de "modelo" função "getSales"', () => {
 
 describe('Camada de "modelo" função "create"', () => {
 	describe('quando o produto é inserido no BD', () => {
-		const name = "Bicicleta";
-		const quantity = 7
-
 		const fakeProduct =  
 		[
 			{
@@ -107,6 +104,47 @@ describe('Camada de "modelo" função "create"', () => {
 			const response = await salesModel.create(fakeProduct);
 
 			expect(response.id).to.be.equal(2);
+		});
+	});
+});
+
+describe('Camada de "modelo" função "getById"', () => {
+	describe('quando existe o produto no BD', () => {
+		const id = 2;
+
+		const fakeProduct = 
+		[
+			{
+				date: "2022-05-12T22:36:44.000Z",
+				productId: 3,
+				quantity: 15
+			}
+		]
+
+		before(() => {
+			sinon.stub(connection, 'execute').resolves([fakeProduct]);
+		});
+
+		after(() => {
+			connection.execute.restore();
+		});
+
+		it('a função retorna um array', async () => {
+			const response = await salesModel.getById(id);
+
+			expect(response).to.be.a('array');
+		});
+
+		it('o array não está vazio', async () => {
+			const response = await salesModel.getById(id);
+
+			expect(response.length).to.be.not.equal(0);
+		});
+
+		it('o array tem contem objeto', async () => {
+			const response = await salesModel.getById(id);
+
+			expect(response[0]).to.be.a('object');
 		});
 	});
 });

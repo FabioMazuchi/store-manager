@@ -117,3 +117,44 @@ describe('Camada de "serviço" função "create"', () => {
 		});
 	});
 });
+
+describe('Camada de "serviço" função "getById"', () => {
+	describe('quando existe o produto no BD', () => {
+		const id = 2;
+
+		const fakeProduct = 
+		[
+			{
+				date: "2022-05-12T22:36:44.000Z",
+				productId: 3,
+				quantity: 15
+			}
+		]
+
+		before(() => {
+			sinon.stub(salesModel, 'getById').resolves([fakeProduct]);
+		});
+
+		after(() => {
+			salesModel.getById.restore();
+		});
+
+		it('a função retorna um array', async () => {
+			const response = await salesService.getById(id);
+
+			expect(response).to.be.a('array');
+		});
+
+		it('o array não está vazio', async () => {
+			const response = await salesService.getById(id);
+
+			expect(response.length).to.be.not.equal(0);
+		});
+
+		it('o array tem contem objeto', async () => {
+			const response = await salesService.getById(id);
+
+			expect(response[0]).to.be.a('array');
+		});
+	});
+});
