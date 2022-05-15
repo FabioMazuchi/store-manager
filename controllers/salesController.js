@@ -16,10 +16,10 @@ const getById = async (req, res, next) => {
 };
 
 const create = async (req, res) => {
-  const sale = req.body;
-
-  const newSold = await salesService.create(sale);
-  res.status(201).json(newSold);
+    const sale = req.body;
+  
+    const newSold = await salesService.create(sale);
+    res.status(201).json(newSold);
 };
 
 const update = async (req, res) => {
